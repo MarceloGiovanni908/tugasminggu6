@@ -1,0 +1,561 @@
+openapi: 3.1.0
+x-stoplight:
+  id: ficg3rglldjhr
+info:
+  title: tugassister6
+  version: '1.0'
+  summary: Tugas Sistem Terdistribusi minggu 6
+  description: tugas sistem terdistribusi untuk membuat 4 endpoint API dengan berbasis CRUD
+  contact:
+    name: tugassister6
+    url: www.tugassister6.com
+    email: admin
+  termsOfService: tugas.com/api
+servers:
+  - url: 'http://tugassister6'
+    description: test
+paths:
+  /users:
+    get:
+      summary: GET akun
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    x-stoplight:
+                      id: l5cn5m1qkoa77
+                  name:
+                    type: string
+                    x-stoplight:
+                      id: 9rgt7xpecwz2r
+                  email:
+                    type: string
+                    x-stoplight:
+                      id: nx2vz5jo7ump1
+              examples:
+                Example 1:
+                  value:
+                    id: 0
+                    name: string
+                    email: string
+      operationId: get-users
+      description: ''
+      requestBody:
+        content: {}
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorized token
+          description: untuk mengakses token dan merefresh token
+    post:
+      summary: Register
+      operationId: post-users
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: 'Jika email sudah digunakan, server akan mengembalikan respond'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    x-stoplight:
+                      id: ok4xw1o3gdglk
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: pfw1za03w628m
+              examples:
+                Example 1:
+                  value:
+                    error: false
+                    message: akun berhasil ditambahkan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  x-stoplight:
+                    id: olwimvoua7lc4
+                email:
+                  type: string
+                  x-stoplight:
+                    id: 5u3kmgetied4s
+                password:
+                  type: string
+                  x-stoplight:
+                    id: 321jggs4gl0yq
+            examples:
+              Example 1:
+                value:
+                  name: string
+                  email: string
+                  password: string
+    parameters: []
+  /login:
+    post:
+      summary: Login
+      operationId: post-login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    x-stoplight:
+                      id: zf6rp9teqal5l
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: hns7xg67iu76e
+                  loginResult:
+                    type: object
+                    x-stoplight:
+                      id: 9hl703xb87ic5
+                    properties:
+                      userId:
+                        type: string
+                        x-stoplight:
+                          id: 9vudk0jf6zzl7
+                      email:
+                        type: string
+                        x-stoplight:
+                          id: 0u8o1swl1u9v5
+                      token:
+                        type: string
+                        x-stoplight:
+                          id: i46k7eny96s6d
+              examples:
+                Example 1:
+                  value:
+                    error: false
+                    message: success
+                    loginResult:
+                      userId: john1
+                      email: johndoe@gmail.com
+                      token: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    x-stoplight:
+                      id: cvvfrdvofvfi0
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: 1ufkax1lj6vmx
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  x-stoplight:
+                    id: jtpx1m210mpfo
+                password:
+                  type: string
+                  x-stoplight:
+                    id: 3uee3wwcqlpif
+            examples:
+              Example 1:
+                value:
+                  email: johndoe@gmai.com
+                  password: john123
+      description: ''
+  '/refreshToken/{userId}':
+    parameters:
+      - schema:
+          type: string
+        name: userId
+        in: path
+        required: true
+        description: user id
+    get:
+      summary: Refresh Token
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    x-stoplight:
+                      id: 6cxrkx5uwoxd4
+              examples:
+                Example 1:
+                  value:
+                    accessToken: string
+      operationId: get-refreshToken-userId
+      description: untuk merefresh token
+  /logout:
+    delete:
+      summary: Logout
+      operationId: delete-logout
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorized Bearer Token
+          description: Token untuk authentication user
+      description: ''
+  /music:
+    get:
+      summary: GET all music
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  '':
+                    type: array
+                    x-stoplight:
+                      id: ytmcwi3brcanp
+                    items:
+                      $ref: '#/components/schemas/music'
+                      x-stoplight:
+                        id: pxcubfhce3sur
+              examples:
+                Example 1:
+                  value:
+                    '':
+                      - id: '1'
+                        title: Happy
+                        genre: Slow Rock
+      operationId: get-music
+      description: 'untuk '
+    post:
+      summary: POST music
+      operationId: post-music
+      responses:
+        '201':
+          description: data berhasil ditambahkan
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    x-stoplight:
+                      id: pinwhtoi6l53r
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: lliefi0lbkpdp
+              examples:
+                Example 1:
+                  value:
+                    error: false
+                    message: music berhasil ditambahkan
+      description: menambahkan data music
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/music'
+            examples:
+              Example 1:
+                value:
+                  id: '1'
+                  title: Happy
+                  genre: Slow Rock
+  '/music/{musicId}':
+    parameters:
+      - schema:
+          type: string
+        name: musicId
+        in: path
+        required: true
+        description: music id
+    get:
+      summary: GET music by id
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/music'
+              examples:
+                Example 1:
+                  value:
+                    id: '1'
+                    title: Happy
+                    genre: Slow Rock
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    x-stoplight:
+                      id: okrzgvm6fhxt1
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: 91sr3xqm1u16l
+              examples:
+                Example 1:
+                  value:
+                    error: false
+                    message: ID tidak ditemukan
+        '':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/music'
+      operationId: get-music-userId
+      requestBody:
+        content: {}
+      description: mengambil data music secara spesifik dari id
+    put:
+      summary: Update music by Id
+      operationId: put-music-musicId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    x-stoplight:
+                      id: ypmhep8w8py2z
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: k6p2pzz78fer2
+              examples:
+                Example 1:
+                  value:
+                    error: false
+                    message: music berhasil diubah
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    x-stoplight:
+                      id: o7s1e5lc306zo
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: p6uclpkwxr1bw
+              examples:
+                Example 1:
+                  value:
+                    error: false
+                    message: id yang anda cari tidak ditemukan
+      description: mengubah seluruh data dalam music berdasarkan ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/music'
+            examples:
+              Example 1:
+                value:
+                  title: Happy
+                  genre: Slow Rock
+    delete:
+      summary: Delete note by Id
+      operationId: delete-music-musicId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    x-stoplight:
+                      id: hzwuce3cj6pmu
+                  '':
+                    type: string
+                    x-stoplight:
+                      id: g1isf1dtjkuu3
+              examples:
+                Example 1:
+                  value:
+                    error: false
+                    message: music berhasil dihapus
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    x-stoplight:
+                      id: as54q3oe8zt9u
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: uj7k2qdcgxhck
+              examples:
+                Example 1:
+                  value:
+                    error: false
+                    message: Id yang ingin anda hapus tidak ditemukan
+      description: menghapus catetan sesuai dengan Id yang diinginkan
+    patch:
+      summary: Patch music by Id
+      operationId: patch-music-musicId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    x-stoplight:
+                      id: 6bkvktv3kvii0
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: i1c6svde0hv83
+              examples:
+                Example 1:
+                  value:
+                    error: false
+                    message: data music berhasil diubah
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    x-stoplight:
+                      id: 91sdwezt5o5lx
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: 3afzpwh3x72b6
+              examples:
+                Example 1:
+                  value:
+                    error: false
+                    message: Id yang ingin diupdate tidak ditemukan
+      description: melakukan update pada data music
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/music'
+            examples:
+              Example 1:
+                value:
+                  genre: Slow Rock
+components:
+  schemas:
+    User:
+      title: User
+      x-stoplight:
+        id: 7scnupfqk0w6q
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          x-stoplight:
+            id: ns8jsbpll4amu
+        email:
+          type: string
+          x-stoplight:
+            id: e3qxcnhfz7h38
+        password:
+          type: string
+          x-stoplight:
+            id: sw0gnruvz9wmc
+        refresh_token:
+          type: string
+          x-stoplight:
+            id: z3x51w0xz17bb
+      examples:
+        - id: 1
+          name: John
+          email: John@gmail.com
+          password: John123
+          refresh_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLUVQQ2tOck5GX1pEUSIsIm5hbWUiOiJkYWZmYSIsImVtYWlsIjoiZGFmZmFAZ21haWwuY29tIiwiaWF0IjoxNzExMjExMTE0LCJleHAiOjE3MTEyMTIwMTR9.RUnlTWLisd8ZlWv04RqgjKM6w6JRuSJeFIqLzxmnczA
+    music:
+      title: music
+      x-stoplight:
+        id: yiktyor8fva2j
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+          x-stoplight:
+            id: bayoq05jn492u
+        genre:
+          type: string
+          x-stoplight:
+            id: jhn6onb6j098t
+      examples:
+        - id: '1'
+          title: Happy
+          genre: Slow Rock
+  securitySchemes: {}
